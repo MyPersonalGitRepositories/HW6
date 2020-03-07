@@ -1,24 +1,20 @@
 package com.example.HW6;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class IndexController {
 
-
     private final BookRepository bookRepository;
-
-    @Autowired
-    public IndexController(final BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
 
     @RequestMapping({ "/", "" })
     public String index(final Model model) {
@@ -33,13 +29,19 @@ public class IndexController {
         return "redirect:/";
     }
 
-////    @Getter
-////    @Setter
-////    @AllArgsConstructor
-////    class Book {
-////        private String title;
-////        private String isbn;
-////    }
+    @RequestMapping(value = "/book/{id}")
+    public String findByID(Model model, @PathVariable int id) {
+        Book book = bookRepository.findByID(id);
+        model.addAttribute("book", book);
+        return "book";
+    }
+
+    @RequestMapping(value = "/book", method = RequestMethod.GET)
+    public String findByTitle(Model model, @PathVariable String title) {
+        List<Book> books = bookRepository.findByTitle(title);
+        model.addAttribute("books", books);
+        return "books";
+    }
 
 }
 
