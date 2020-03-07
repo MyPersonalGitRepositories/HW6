@@ -13,12 +13,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NamedQueries({
         @NamedQuery(query = "SELECT b FROM Book b", name = Book.FIND_ALL),
-        @NamedQuery(query = "SELECT b FROM Book b WHERE b.title LIKE CONCAT('%', :title, '%')", name = Book.FIND_ALL_BY_TITLE)
+        @NamedQuery(query = "SELECT b FROM Book b WHERE b.title LIKE CONCAT('%', :title, '%')", name = Book.FIND_ALL_BY_TITLE),
+        @NamedQuery(query = "SELECT b FROM Book b WHERE b.isbn = :isbn", name = Book.FIND_BY_ISBN)
 })
 public class Book {
 
     public static final String FIND_ALL = "Book.FIND_ALL";
     public static final String FIND_ALL_BY_TITLE = "Book.FIND_ALL_BY_TITLE";
+    public static final String FIND_BY_ISBN = "Book.FIND_BY_ISBN";
 
     @Column(name = "title")
     private String title;

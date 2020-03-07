@@ -3,10 +3,7 @@ package com.example.HW6;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,10 +34,17 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/book", method = RequestMethod.GET)
-    public String findByTitle(Model model, @PathVariable String title) {
+    public String findByTitle(Model model, @RequestParam String title) {
         List<Book> books = bookRepository.findByTitle(title);
         model.addAttribute("books", books);
         return "books";
+    }
+
+    @RequestMapping(value = "/book1", method = RequestMethod.GET)
+    public String findByIsbn(Model model, @RequestParam String isbn) {
+        Book book = bookRepository.findByIsbn(isbn);
+        model.addAttribute("book", book);
+        return "book";
     }
 
 }

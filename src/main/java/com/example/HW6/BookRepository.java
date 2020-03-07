@@ -29,6 +29,11 @@ public class BookRepository {
     }
 
     @Transactional
+    public Book findByIsbn(String isbn) {
+        return entityManager.createNamedQuery(Book.FIND_BY_ISBN, Book.class).setParameter("isbn", isbn).getSingleResult();
+    }
+
+    @Transactional
     public Book findByID(int id) {
         return entityManager.find(Book.class, id);
     }

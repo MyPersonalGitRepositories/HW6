@@ -6,13 +6,19 @@
 </head>
 <body>
 
-<h1 th:text="${book.title}"></h1>
-<!--TODO paragraphs-->
+<h2>Book Information</h2>
+
+<h3>Book</h3>
+<p th:text="${book.title}"></p>
+
 <h3>Author</h3>
 <p th:text="${book.author}"></p>
 
 <h3>ISBN</h3>
 <p th:text="${book.isbn}"></p>
+
+<h3>Id</h3>
+<p th:text="${book.id}"></p>
 
 </body>
 </html>
