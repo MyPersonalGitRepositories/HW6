@@ -1,8 +1,6 @@
 package com.example.HW6;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,16 +9,10 @@ import javax.persistence.*;
 @Table(name = "books")
 @NoArgsConstructor
 @AllArgsConstructor
-@NamedQueries({
-        @NamedQuery(query = "SELECT b FROM Book b", name = Book.FIND_ALL),
-        @NamedQuery(query = "SELECT b FROM Book b WHERE b.title LIKE CONCAT('%', :title, '%')", name = Book.FIND_ALL_BY_TITLE),
-        @NamedQuery(query = "SELECT b FROM Book b WHERE b.isbn = :isbn", name = Book.FIND_BY_ISBN)
-})
+@Getter
+@Setter
+@ToString
 public class Book {
-
-    public static final String FIND_ALL = "Book.FIND_ALL";
-    public static final String FIND_ALL_BY_TITLE = "Book.FIND_ALL_BY_TITLE";
-    public static final String FIND_BY_ISBN = "Book.FIND_BY_ISBN";
 
     @Column(name = "title")
     private String title;

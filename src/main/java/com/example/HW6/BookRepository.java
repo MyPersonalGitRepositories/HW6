@@ -1,41 +1,15 @@
 package com.example.HW6;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class BookRepository {
+public interface BookRepository extends JpaRepository<Book, Integer> {
 
-    private final EntityManager entityManager;
-
-    @Transactional
-    public List<Book> findAll() {
-        return entityManager.createNamedQuery(Book.FIND_ALL, Book.class).getResultList();
-    }
-
-    @Transactional
-    public Book save(Book book) {
-        return entityManager.merge(book);
-    }
-
-    @Transactional
-    public List<Book> findByTitle(String title) {
-        return entityManager.createNamedQuery(Book.FIND_ALL_BY_TITLE, Book.class).setParameter("title", title).getResultList();
-    }
-
-    @Transactional
-    public Book findByIsbn(String isbn) {
-        return entityManager.createNamedQuery(Book.FIND_BY_ISBN, Book.class).setParameter("isbn", isbn).getSingleResult();
-    }
-
-    @Transactional
-    public Book findByID(int id) {
-        return entityManager.find(Book.class, id);
-    }
-
+    @Query("SELECT b FROM BookEntity b " +
+            "WHERE b.title LIKE :string " +
+            "OR b.isbn LIKE :string")
+    List<Book> findAllByTitleOrIsbn(@Param("string") String string);
 }

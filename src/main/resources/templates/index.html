@@ -16,20 +16,12 @@
     <input type="submit" value="Submit"/>
 </form>
 
-<!--TODO think about it..-->
 <div style="display: inline-block">
-<h3>Searching by title</h3>
-<form action="/book" method="get">
+    <h3>Searching by title or ISBN</h3>
+    <form action="/books" method="get">
     <input type="text" name="title">
     <input type="submit" value="Submit"/>
 </form>
-</div>
-<div style="display: inline-block;margin-left: 10%;">
-    <h3>Searching by isbn</h3>
-    <form action="/book1" method="get">
-        <input type="text" name="isbn">
-        <input type="submit" value="Submit"/>
-    </form>
 </div>
 
 <h3>Books</h3>
@@ -43,7 +35,6 @@
     <th>ID</th>
     </thead>
     <tbody>
-    <!--    TODO add href for title-->
     <tr th:each="book: ${books}">
         <td>
             <a th:href="@{/book/{id}(id=${book.id})}"

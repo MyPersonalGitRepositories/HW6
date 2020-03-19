@@ -11,41 +11,35 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IndexController {
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
     @RequestMapping({ "/", "" })
     public String index(final Model model) {
-        List<Book> books = bookRepository.findAll();
+        List<Book> books = bookService.findAll();
         model.addAttribute("books", books);
         return "index";
     }
 
     @RequestMapping(value = "/add-book", method = RequestMethod.POST)
     public String addBook(@ModelAttribute final Book book) {
-        bookRepository.save(book);
+        bookService.save(book);
         return "redirect:/";
     }
 
     @RequestMapping(value = "/book/{id}")
-    public String findByID(Model model, @PathVariable int id) {
-        Book book = bookRepository.findByID(id);
+    public String findByID(@PathVariable int id, Model model) {
+        Book book = bookService.findByID(id);
         model.addAttribute("book", book);
         return "book";
     }
 
-    @RequestMapping(value = "/book", method = RequestMethod.GET)
-    public String findByTitle(Model model, @RequestParam String title) {
-        List<Book> books = bookRepository.findByTitle(title);
+    @RequestMapping(value = "/books", method = RequestMethod.GET)
+    public String findByTitleOrIsbn(final Model model, @RequestParam final String string) {
+        List<Book> books = bookService.findByTitleOrIsbn(string);
         model.addAttribute("books", books);
         return "books";
     }
 
-    @RequestMapping(value = "/book1", method = RequestMethod.GET)
-    public String findByIsbn(Model model, @RequestParam String isbn) {
-        Book book = bookRepository.findByIsbn(isbn);
-        model.addAttribute("book", book);
-        return "book";
-    }
 
 }
 
