@@ -27,14 +27,14 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/book/{id}")
-    public String findByID(@PathVariable int id, Model model) {
+    public String findByID(Model model, @PathVariable int id) {
         Book book = bookService.findByID(id);
         model.addAttribute("book", book);
         return "book";
     }
 
-    @RequestMapping(value = "/books", method = RequestMethod.GET)
-    public String findByTitleOrIsbn(final Model model, @RequestParam final String string) {
+    @RequestMapping(value = "/book", method = RequestMethod.GET)
+    public String findByTitleOrIsbn(Model model, @RequestParam String string) {
         List<Book> books = bookService.findByTitleOrIsbn(string);
         model.addAttribute("books", books);
         return "books";
