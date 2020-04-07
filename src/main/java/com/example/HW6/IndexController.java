@@ -1,6 +1,7 @@
 package com.example.HW6;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IndexController {
 
+    @Autowired
     private final BookService bookService;
 
     @RequestMapping({ "/", "" })
@@ -20,7 +22,7 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(value = "/add-book", method = RequestMethod.POST)
+    @PostMapping("/add-book")
     public String addBook(@ModelAttribute final Book book) {
         bookService.save(book);
         return "redirect:/";
@@ -33,7 +35,7 @@ public class IndexController {
         return "book";
     }
 
-    @RequestMapping(value = "/book", method = RequestMethod.GET)
+    @GetMapping("/book")
     public String findByTitleOrIsbn(Model model, @RequestParam String string) {
         List<Book> books = bookService.findByTitleOrIsbn(string);
         model.addAttribute("books", books);
