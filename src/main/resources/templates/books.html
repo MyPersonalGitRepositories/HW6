@@ -5,37 +5,31 @@
     <title>Books</title>
 </head>
 <body>
+<h3>Search by title or ISBN</h3>
+<form action="/books" method="get">
+    <input type="text" name="text"/>
+    <input type="submit" value="Search"/>
+</form>
 
 <h3>Books</h3>
 <table>
     <thead>
     <th>Title</th>
-    <th></th>
     <th>Author</th>
-    <th></th>
     <th>ISBN</th>
     <th>ID</th>
     </thead>
     <tbody>
-
     <tr th:each="book: ${books}">
         <td>
-            <a th:href="@{/book/{id}(id=${book.id})}"
-               th:text="${book.title}"></a>
+            <a th:href="@{/books/{id}(id=${book.id})}" th:text="${book.title}"></a>
         </td>
-        <td></td>
         <td th:text="${book.author}"></td>
-        <td></td>
         <td th:text="${book.isbn}"></td>
-        <td></td>
         <td th:text="${book.id}"></td>
     </tr>
     </tbody>
 </table>
-
-<form action="/" method="get">
-    <button name="Back" type="submit">Back</button>
-</form>
 
 </body>
 </html>
