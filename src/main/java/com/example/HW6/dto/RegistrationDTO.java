@@ -19,6 +19,6 @@ public class RegistrationDTO {
 
     @NotEmpty
     @Size(min = 8, max = 20)
-    private String pass;
+    private String password;
 
 }

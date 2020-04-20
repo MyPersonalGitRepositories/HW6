@@ -33,10 +33,10 @@ public class UserController {
                     Collections.singletonList("Login already exists"),
                     HttpStatus.FORBIDDEN);
         }
-        String userPassword = user.getPass();
+        String userPassword = user.getPassword();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(userPassword);
-        user.setPass(encodedPassword);
+        user.setPassword(encodedPassword);
         userService.registerAsUser(user);
         return new ResponseEntity(HttpStatus.CREATED);
     }

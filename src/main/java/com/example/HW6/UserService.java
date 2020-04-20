@@ -41,7 +41,7 @@ public class UserService {
 
         return save(User.builder()
                 .login(user.getLogin())
-                .password(user.getPass())
+                .password(user.getPassword())
                 .permissions(Collections.singletonList(userPermission))
                 .build());
     }

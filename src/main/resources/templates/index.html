@@ -18,51 +18,67 @@
     }
 </style>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<div th:if="${#authorization.expression('!isAuthenticated()')}">
-    <p>You can login or register to access full functionality.</p>
-    <button id="login">Login</button>
-    <button id="register">Register</button>
-</div>
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header" style="float: right">
+                <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                    <p>You can login or register to access full functionality.</p>
+                    <button id="login">Login</button>
+                    <button id="register">Register</button>
+                </div>
+                <div th:if="${#authorization.expression('isAuthenticated()')}">
+                    <button id="logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <div class="row">
+        <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+            <h3>Add book</h3>
+            <div id="errorDiv"></div>
+            <form id="addBookForm">
+                Title:<br>
+                <input type="text" name="title"/><br>
+                Author:<br>
+                <input type="text" name="author"/><br>
+                ISBN:<br>
+                <input type="text" name="isbn"/><br><br>
+                <input class="button" type="submit" value="Save"/>
+            </form>
+        </div>
 
-<div th:if="${#authorization.expression('isAuthenticated()')}">
-    <button id="logout">Logout</button>
-</div>
+        <div>
+            <h3>Search by title or ISBN</h3><br>
+            <form id="searchForm">
+                <input type="text" name="text"/>
+                <input type="submit" value="Search"/>
+            </form>
+        </div>
 
-<div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
-    <h3>Add book</h3>
-    <div id="errorDiv"></div>
-    <form id="addBookForm">
-        Title:
-        <input type="text" name="title"/>
-        Author:
-        <input type="text" name="author"/>
-        ISBN:
-        <input type="text" name="isbn"/>
-        <input type="submit" value="Save"/>
-    </form>
-</div>
+        <div class="col-sm text-center">
+            <h3>Books</h3>
+            <div>
+                <button id="getBooks">Show all</button>
+                <button id="getFavorites" th:if="${#authorization.expression('hasAuthority(''USER'')')}">Show
+                    favorites
+                </button>
+                <table style="float: right">
+                    <thead>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>ISBN</th>
+                    <th>ID</th>
+                    </thead>
+                    <tbody id="booksTable">
 
-<h3>Search by title or ISBN</h3>
-<form id="searchForm">
-    <input type="text" name="text"/>
-    <input type="submit" value="Search"/>
-</form>
-
-<h3>Books</h3>
-<div>
-    <button id="getBooks">Show all</button>
-    <button id="getFavorites" th:if="${#authorization.expression('hasAuthority(''USER'')')}">Show favorites</button>
-    <table>
-        <thead>
-        <th>Title</th>
-        <th>Author</th>
-        <th>ISBN</th>
-        <th>ID</th>
-        </thead>
-        <tbody id="booksTable">
-
-        </tbody>
-    </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
